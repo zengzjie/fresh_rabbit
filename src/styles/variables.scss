@@ -1,0 +1,98 @@
+// 主题色
+$blue-6: #0054BA;
+$blue-5: #006BE1;
+$blue-2: fade($blue-5, 25);
+$blue-1: fade($blue-5, 10);
+
+// 红色
+$red-7: #cf4444;
+$red-6: #CE4837;
+$red-5: #EC5340;
+$red-4: #fa3534;
+$red-2: fade($red-5, 25);
+$red-1: fade($red-5, 10);
+
+// 橙色
+$orange-6: #D97700;
+$orange-5: #FF9500;
+$orange-4: #ff9545;
+$orange-2: fade($orange-5, 25);
+$orange-1: fade($orange-5, 10);
+
+// 黄色
+$yellow-6: #D9A600;
+$yellow-5: #FFCC00;
+$yellow-2: fade($yellow-5, 25);
+$yellow-1: fade($yellow-5, 10);
+
+// 绿色
+$green-6: #009144;
+$green-5: #06B752;
+$green-4-1: #27ba9b;
+$green-4: #28bb9c;
+$green-3: #06c05f;
+$green-2: fade($green-5, 25);
+$green-1: fade($green-5, 10);
+
+// 中性色
+$gray-11: #595c63;
+$gray-10-2: #1e1e1e;
+$gray-10-1: #262626;
+$gray-10: #0F1521;
+$gray-9: #31456A;
+$gray-4-1: #444;
+$gray-8: fade($gray-9, 86);
+$gray-7: fade($gray-9, 60);
+$gray-6: fade($gray-9, 36);
+$gray-5: fade($gray-9, 16);
+$gray-4: fade($gray-9, 10);
+$gray-3: fade($gray-9, 5);
+$gray-2-5: fade($gray-9, 3);
+$gray-2-9: #939393;
+$gray-2-8-1: #888;
+$gray-2-8: #8b8b8b;
+$gray-2-7: #7f7f7f;
+$gray-2-6: #666;
+$gray-2-4-1: #cccccc;
+$gray-2-4: #f4f4f4;
+$gray-2-3-1: #e3e4e7;
+$gray-2-3: #f3f4f4;
+$gray-2-2: #e2e2e2;
+$gray-2: #F5F6F8;
+$gray-1: #fff;
+
+// components颜色
+$x-main-color: #303133;
+$x-content-color: #606266;
+$x-tips-color: #909399;
+$x-light-color: #c0c4cc;
+$x-border-color: #e4e7ed;
+$x-bg-color: #f3f4f6;
+
+$x-type-primary: #2979ff;
+$x-type-primary-light: #ecf5ff;
+$x-type-primary-disabled: #a0cfff;
+$x-type-primary-dark: #2b85e4;
+
+$x-type-warning: #ff9900;
+$x-type-warning-disabled: #fcbd71;
+$x-type-warning-dark: #f29100;
+$x-type-warning-light: #fdf6ec;
+
+$x-type-success: #19be6b;
+$x-type-success-disabled: #71d5a1;
+$x-type-success-dark: #18b566;
+$x-type-success-light: #dbf1e1;
+
+$x-type-error: #fa3534;
+$x-type-error-disabled: #fab6b6;
+$x-type-error-dark: #dd6161;
+$x-type-error-light: #fef0f0;
+
+$x-type-info: #909399;
+$x-type-info-disabled: #c8c9cc;
+$x-type-info-dark: #82848a;
+$x-type-info-light: #f4f4f5;
+
+$x-form-item-height: 70rpx;
+$x-form-item-border-color: #dcdfe6;

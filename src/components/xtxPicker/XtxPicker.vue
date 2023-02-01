@@ -1,0 +1,235 @@
+<template>
+  <view class="x-picker">
+    <picker
+      class="x-picker__picker"
+      :mode="(mode as PickerMode)"
+      :value="(defaultValue as PickerValue)"
+      :disabled="disabled"
+      :start="mode === 'date' || mode === 'time' ? start : ''"
+      :end="mode === 'date' || mode === 'time' ? end : ''"
+      :fields="mode === 'date' ? fields : ''"
+      :custom-item="mode === 'region' ? customItem : ''"
+      :selector-type="mode === 'selector' ? selectorType : ''"
+      @change="handleChange"
+      @cancel="handleCancel"
+      @columnchange="handleColumnChange"
+    >
+      <view v-if="fullLocation" class="x-picker__picker__text">{{ fullLocation }}</view>
+      <view v-else class="x-picker__picker__placeholder">{{ placeholder }}</view>
+    </picker>
+    <view class="x-picker__right-icon x-flex">
+      <view v-if="isShowClear" class="x-picker__right-icon__clear x-picker__right-icon__item">
+        <uni-icons type="clear" size="15" color="#c0c4cc" @click="onClear"></uni-icons>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script lang="ts" setup>
+import { PickerMode, DateFields, DefaultValues } from './types';
+import { XFormItemProps } from '../xtxForm/types';
+import { PickerValue } from '@uni-helper/uni-app-types';
+import { ref, inject, computed, watch } from 'vue';
+
+interface PickerProps {
+  modelValue: DefaultValues;
+  mode: PickerMode;
+  disabled?: boolean;
+  start?: string;
+  end?: string;
+  fields?: DateFields;
+  customItem?: string;
+  range?: any[][] | Record<string, any>[][] | any[] | Record<string, any>[];
+  rangeKey?: string;
+  selectorType?: string;
+  placeholder?: string;
+  presentationText: string;
+  clearable?: boolean;
+}
+
+const emit = defineEmits(['update:modelValue', 'change', 'coumnchange', 'cancel']);
+
+const xFormItem = inject('xFormItem') as XFormItemProps;
+
+const props = defineProps<PickerProps>();
+//   modelValue: {
+//     type: Array,
+//     default: () => []
+//   },
+//   // 选择器的类型, 'selector' | 'multiSelector' | 'time' | 'date' | 'region'
+//   mode: {
+//     type: String,
+//     default: 'selector'
+//   },
+//   // 是否禁用
+//   disabled: {
+//     type: Boolean,
+//     default: false
+//   },
+//   // 日期选择器的开始时间
+//   start: {
+//     type: String,
+//     default: ''
+//   },
+//   // 日期选择器的结束时间
+//   end: {
+//     type: String,
+//     default: ''
+//   },
+//   // 日期选择器的时间字段
+//   fields: {
+//     type: String,
+//     default: 'day'
+//   },
+//   // 选择器的自定义项
+//   customItem: {
+//     type: String,
+//     default: ''
+//   },
+//   // mode为 selector 或 multiSelector 时，range 有效。二维数组，长度表示多少列，数组的每项表示每列的数据，如[["a","b"], ["c","d"]]
+//   range: {
+//     type: [Array, Array<Record<string, any>>],
+//     default: () => []
+//   },
+//   // mode为 selector 或 multiSelector 时，rangeKey 有效。表示 range 中的 key，用于显示内容
+//   rangeKey: {
+//     type: String,
+//     default: ''
+//   },
+//   selectorType: {
+//     type: String,
+//     default: 'auto'
+//   },
+//   // 选择器的占位符
+//   placeholder: {
+//     type: String,
+//     default: '请选择'
+//   },
+//   // 用于用户界面展示的完整地址
+//   presentationText: {
+//     type: String,
+//     default: ''
+//   },
+//   // 是否显示清除按钮
+//   clearable: {
+//     type: Boolean,
+//     default: true
+//   }
+// });
+
+const defaultValue = ref(props.modelValue);
+// 是否显示清除按钮
+const isShowClear = ref<boolean | undefined>(false);
+// 用于用户界面展示的完整地址
+const fullLocation = ref<string | undefined>(props.presentationText);
+
+// Picker改变时触发
+const handleChange = (event: any) => {
+  fullLocation.value = event.detail.value.join('');
+  emit('update:modelValue', event.detail.code);
+  emit('change', event.detail);
+  setTimeout(() => {
+    // 将当前的值发送到 u-form-item 进行校验
+    xFormItem.formItemEmitter.emit('on-form-change', event.detail.code);
+  }, 40);
+};
+
+// Picker取消时触发
+const handleCancel = (event: any) => {
+  emit('update:modelValue', event.detail.code);
+  emit('cancel', event.detail);
+  //   setTimeout(() => {
+  //     // 将当前的值发送到 u-form-item 进行校验
+  //     xFormItem.formItemEmitter.emit('on-form-blur', event.detail.code);
+  //   }, 40);
+};
+
+// Picker列改变时触发
+const handleColumnChange = (event: any) => {
+  emit('coumnchange', {
+    column: event.detail.column,
+    value: event.detail.value
+  });
+};
+
+// 清除按钮点击事件
+const onClear = () => {
+  const type = Object.prototype.toString.call(props.modelValue).slice(8, 14);
+  switch (type) {
+    case 'String':
+      emit('update:modelValue', '');
+      setTimeout(() => {
+        // 将当前的值发送到 u-form-item 进行校验
+        xFormItem.formItemEmitter.emit('on-form-change', '');
+      }, 40);
+      break;
+    case 'Number':
+      emit('update:modelValue', 0);
+      setTimeout(() => {
+        // 将当前的值发送到 u-form-item 进行校验
+        xFormItem.formItemEmitter.emit('on-form-change', 0);
+      }, 40);
+      break;
+    default:
+      emit('update:modelValue', []);
+      setTimeout(() => {
+        // 将当前的值发送到 u-form-item 进行校验
+        xFormItem.formItemEmitter.emit('on-form-change', []);
+      }, 40);
+      break;
+  }
+  fullLocation.value = '';
+};
+
+watch(
+  () => props.modelValue,
+  (val) => {
+    defaultValue.value = val;
+    isShowClear.value = props.clearable && ((val as unknown as string) != '' || !!val);
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+);
+
+watch(
+  () => props.presentationText,
+  (val) => {
+    fullLocation.value = val;
+  }
+);
+</script>
+
+<style lang="scss">
+:host {
+  flex: 1;
+}
+</style>
+
+<style lang="scss" scoped>
+.x-picker {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  &__picker {
+    font-size: 28rpx;
+    color: $x-main-color;
+    flex: 1;
+    &__text {
+      color: $x-main-color;
+    }
+    &__placeholder {
+      color: $x-tips-color;
+    }
+  }
+  &__right-icon {
+    &__item {
+      uni-icons {
+        padding: 0 10px;
+      }
+    }
+  }
+}
+</style>
