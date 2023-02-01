@@ -231,7 +231,7 @@ const onFormItemError = (status: boolean) => {
 };
 
 // 监听u-form-item发出的错误事件，将输入框边框变红色
-xFormItem.formItemEmitter.on('on-form-item-error', () => onFormItemError);
+xFormItem.formItemEmitter.on('on-form-item-error', (status: boolean) => onFormItemError(status));
 
 /**
  * change 事件
@@ -321,7 +321,6 @@ watch(
     flex: 1;
   }
   &--border {
-    border-radius: 6rpx;
     border-radius: 4px;
     border: 1px solid $x-form-item-border-color;
   }

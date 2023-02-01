@@ -39,19 +39,29 @@ interface PickerProps {
   end?: string;
   fields?: DateFields;
   customItem?: string;
-  range?: any[][] | Record<string, any>[][] | any[] | Record<string, any>[];
+  range?: any;
   rangeKey?: string;
   selectorType?: string;
   placeholder?: string;
   presentationText: string;
-  clearable?: boolean;
+  clearable?: boolean; // 缺少默认值
 }
 
 const emit = defineEmits(['update:modelValue', 'change', 'coumnchange', 'cancel']);
 
 const xFormItem = inject('xFormItem') as XFormItemProps;
 
-const props = defineProps<PickerProps>();
+const props = withDefaults(defineProps<PickerProps>(), {
+  start: '',
+  end: '',
+  fields: 'day',
+  customItem: '',
+  range: [],
+  rangeKey: '',
+  selectorType: 'auto',
+  placeholder: '请选择',
+  clearable: true
+});
 //   modelValue: {
 //     type: Array,
 //     default: () => []
@@ -136,12 +146,7 @@ const handleChange = (event: any) => {
 
 // Picker取消时触发
 const handleCancel = (event: any) => {
-  emit('update:modelValue', event.detail.code);
-  emit('cancel', event.detail);
-  //   setTimeout(() => {
-  //     // 将当前的值发送到 u-form-item 进行校验
-  //     xFormItem.formItemEmitter.emit('on-form-blur', event.detail.code);
-  //   }, 40);
+  emit('cancel');
 };
 
 // Picker列改变时触发
@@ -181,6 +186,7 @@ const onClear = () => {
   fullLocation.value = '';
 };
 
+// 👀 监听 modelValue 的变化, 回显picker的 value 选项位置, 用于清除按钮的显示隐藏
 watch(
   () => props.modelValue,
   (val) => {
@@ -193,6 +199,7 @@ watch(
   }
 );
 
+// 👀 监听 presentationText 的变化, 回显 picker 选择后的中文项
 watch(
   () => props.presentationText,
   (val) => {

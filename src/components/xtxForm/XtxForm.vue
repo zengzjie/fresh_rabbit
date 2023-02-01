@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 /**
- * form 表单 （目前没有提供其他的配置属性，后续可以补上）
+ * form 表单 (加上组件的配置介绍)
  * @property {Object} model 表单数据对象
  * @property {Object} rules 校验规则
  */

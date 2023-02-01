@@ -268,10 +268,20 @@ watch(
   () => xForm.errorType,
   (nVal) => {
     errorType.value = nVal;
+    // 如果当前的校验状态为error，且errorType中含有border，就显示边框
+    emitter.emit('on-form-item-error', validateState.value === 'error' && showError('border'));
   }
 );
 
-const showError = (type: 'none' | 'message' | 'toast' | 'border-bottom') => {
+watch(
+  () => validateState.value,
+  (nVal) => {
+    // 如果当前的校验状态为error，且errorType中含有border，就显示边框
+    emitter.emit('on-form-item-error', nVal === 'error' && showError('border'));
+  }
+);
+
+const showError = (type: 'none' | 'message' | 'border' | 'border-bottom') => {
   // 如果errorType数组中含有none，或者toast提示类型
   if (errorType.value.indexOf('none') >= 0) return false;
   else if (errorType.value.indexOf(type) >= 0) return true;
