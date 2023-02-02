@@ -1,2 +1,2 @@
 # fresh_rabbit
-基于 vite+vue+ts 的商场小程序
+基于 vite+vue3+ts 的商场小程序
