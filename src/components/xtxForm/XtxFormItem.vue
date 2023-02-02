@@ -31,7 +31,13 @@
               elLabelStyle,
               {
                 'justify-content':
-                  elLabelPosition === 'left' ? 'flex-start' : elLabelAlign === 'center' ? 'center' : 'flex-end'
+                  elLabelPosition === 'left'
+                    ? 'flex-start'
+                    : elLabelAlign === 'center'
+                    ? 'center'
+                    : elLabelAlign === 'left'
+                    ? 'flex-start'
+                    : 'flex-end'
               }
             ]"
           >
@@ -66,6 +72,27 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * form-item 表单项
+ * @property {String} label 标签文本
+ * @property {String} prop 验证字段
+ * @property {[Boolean, String]} borderBottom 是否显示表单下划线边框
+ * @property {[String, Number]} labelWidth label的宽度
+ * @property {String} labelPosition label的位置, left: 左侧，top: 上方
+ * @property {String} labelAlign label的对齐方式, left: 左对齐，center: 居中，right: 右对齐
+ * @property {Object} labelStyle label的自定义样式
+ * @property {String} rightIcon 右侧图标
+ * @property {String} leftIcon 左侧图标
+ * @property {Object} rightIconStyle 右侧图标样式
+ * @property {Object} leftIconStyle 左侧图标样式
+ * @property {Boolean} required 是否必填
+ * <XtxFormItem key="receiver" label="xxx" prop="receiver" :required="true">
+    <XtxInput v-model="xx" />
+    <template #right>
+      <view>右槽</view>
+    </template>
+   </XtxFormItem>
+ */
 import { ref, reactive, toRefs, provide, inject, watch, computed, onMounted, onBeforeUnmount, useSlots } from 'vue';
 import mitt from 'mitt';
 import Schema from 'async-validator';
@@ -375,6 +402,7 @@ onBeforeUnmount(() => {
         display: flex;
         align-items: center;
         flex-direction: row;
+        flex: 1;
       }
     }
   }
@@ -398,12 +426,6 @@ onBeforeUnmount(() => {
         color: $x-light-color;
         font-size: 30rpx;
       }
-    }
-
-    switch {
-      position: absolute;
-      right: 5rpx;
-      transform: scale(0.7);
     }
   }
 

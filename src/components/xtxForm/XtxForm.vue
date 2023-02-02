@@ -6,9 +6,15 @@
 
 <script lang="ts" setup>
 /**
- * form 表单 (加上组件的配置介绍)
+ * form 表单
  * @property {Object} model 表单数据对象
  * @property {Object} rules 校验规则
+ * @property {Array<String>} errorType 错误提示类型
+ * @property {Boolean} borderBottom 是否显示表单下划线边框
+ * @property {String} labelPosition label的位置, left: 左侧，top: 上方
+ * @property {String} labelAlign label的对齐方式, left: 左对齐，center: 居中，right: 右对齐
+ * @property {Object} labelStyle label的自定义样式
+ * <XtxForm ref="formRef" :model="form" :rules="rules"></XtxForm>
  */
 import { reactive, provide, toRefs } from 'vue';
 import { XFormItemProps } from './types';

@@ -1,21 +1,10 @@
 <template>
   <view class="viewport">
     <view class="card">
-      <XtxForm ref="formRef" :model="form" :rules="rules">
-        <XtxFormItem
-          key="receiver"
-          label="姓名"
-          prop="receiver"
-          :required="true"
-          :label-width="140"
-          left-icon="person"
-          :border-bottom="true"
-          right-icon="gift"
-        >
-          <XtxInput v-model="form.receiver" placeholder-style="color: #888" placeholder="请填写收货人姓名" />
-          <template #right>
-            <view>右槽</view>
-          </template>
+      <!-- left-icon="person" -->
+      <XtxForm ref="formRef" :model="form" :rules="rules" label-position="top">
+        <XtxFormItem key="receiver" label="姓名" prop="receiver" :required="true">
+          <XtxInput v-model="form.receiver" placeholder="请填写收货人姓名" />
         </XtxFormItem>
         <XtxFormItem
           key="contact"
@@ -25,7 +14,7 @@
           :label-width="190"
           left-icon="phone"
         >
-          <XtxInput v-model="form.contact" placeholder-style="color: #888" placeholder="请填写收货人手机号码" />
+          <XtxInput v-model="form.contact" placeholder="请填写收货人手机号码" />
         </XtxFormItem>
         <XtxFormItem
           key="region"
@@ -44,16 +33,24 @@
           />
         </XtxFormItem>
         <XtxFormItem key="address" label="详细地址" prop="address" :required="true" :label-width="190" left-icon="home">
-          <XtxInput v-model="form.address" placeholder-style="color: #888" placeholder="请填写街道、楼牌号信息" />
+          <XtxInput v-model="form.address" placeholder="请填写街道、楼牌号信息" />
         </XtxFormItem>
         <XtxFormItem key="isDefault" label="设置默认地址" :label-width="230" left-icon="notification">
-          <switch :checked="form.isDefault === 1" color="#27ba9b" @change="isDefaultChange" />
+          <template #right>
+            <switch
+              :checked="form.isDefault === 1"
+              color="#27ba9b"
+              style="transform: scale(0.7)"
+              @change="isDefaultChange"
+            />
+          </template>
         </XtxFormItem>
       </XtxForm>
     </view>
     <button class="button" @tap="submitFrom">{{ props.id ? '保存' : '确定' }}</button>
-    <button class="button" style="margin-top: 10px" @tap="reset">{{ '重置' }}</button>
+    <!-- <button class="button" style="margin-top: 10px" @tap="reset">{{ '重置' }}</button> -->
   </view>
+  <!-- position: absolute; right: 5rpx;  -->
 </template>
 
 <script lang="ts" setup>
@@ -73,15 +70,15 @@ const props = defineProps<{
 }>();
 
 const form = reactive({
-  receiver: '小明', // 收货人姓名
-  contact: '13149343162', // 收货人电话
-  region: ['150000', '150300', '150304'], // 省市区编码
-  regionAddress: '广东省广州市天河区', // 省市区地址
-  address: '广州市天河区万科云', // 详细地址
+  receiver: '', // 收货人姓名
+  contact: '', // 收货人电话
+  region: [], // 省市区编码
+  regionAddress: '', // 省市区地址
+  address: '', // 详细地址
   isDefault: 0, // 默认收货地址
-  provinceCode: '150000', // 省编码
-  cityCode: '150300', // 市编码
-  countyCode: '150304' // 区编码
+  provinceCode: '', // 省编码
+  cityCode: '', // 市编码
+  countyCode: '' // 区编码
 } as PostMemberAddressData);
 
 const formRef = ref();
@@ -138,25 +135,40 @@ const isDefaultChange = (e: any) => {
 // 重置
 const reset = () => {
   formRef.value.resetFields();
+  form.regionAddress = '';
 };
 
 // 保存
-const submitFrom = async () => {
+const submitFrom = () => {
   // 先校验表单
-  formRef.value.validate((valid: boolean) => {
-    console.log(valid, 'valid');
+  formRef.value.validate(async (valid: boolean) => {
+    console.log(form, 'form');
+    if (valid) {
+      if (props.id) {
+        // 如果有 id 调用：修改地址请求
+        await putMemberAddress(props.id, form);
+        uni.showToast({
+          title: '修改成功',
+          icon: 'success',
+          success: () =>
+            setTimeout(() => {
+              uni.navigateBack();
+            }, 500)
+        });
+      } else {
+        // 没有 id 调用：添加地址请求
+        await postMemberAddress(form);
+        uni.showToast({
+          title: '添加成功',
+          icon: 'success',
+          success: () =>
+            setTimeout(() => {
+              uni.navigateBack();
+            }, 500)
+        });
+      }
+    }
   });
-  console.log(form, 'form');
-
-  //   if (props.id) {
-  //     // 如果有 id 调用：修改地址请求
-  //     await putMemberAddress(props.id, form);
-  //     uni.showToast({ title: '修改成功' });
-  //   } else {
-  //     // 没有 id 调用：添加地址请求
-  //     await postMemberAddress(form);
-  //     uni.showToast({ title: '添加成功' });
-  //   }
 };
 </script>
 
