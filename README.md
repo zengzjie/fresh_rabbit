@@ -6,3 +6,11 @@ Vue3 + TypeScript + Sass
 
 ## 项目运行
 ```
+通过 HTTPS：https://github.com/zengzjie/fresh_rabbit.git
+通过 SSH：git@github.com:zengzjie/fresh_rabbit.git
+
+# 安装项目依赖
+yarn
+
+# 微信小程序
+yarn dev:mp-weixin
