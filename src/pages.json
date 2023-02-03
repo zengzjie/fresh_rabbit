@@ -15,31 +15,6 @@
   },
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-    // {
-    //   "path": "pages/my/address/form",
-    //   "style": {
-    //     "navigationBarTitleText": "新建地址"
-    //   }
-    // },
-    {
-      "path": "pages/my/address/index",
-      "style": {
-        "navigationBarTitleText": "地址管理"
-      }
-    },
-    {
-      "path": "pages/my/index",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTextStyle": "white"
-      }
-    },
-    {
-      "path": "pages/cart/default",
-      "style": {
-        "navigationBarTitleText": "购物车"
-      }
-    },
     {
       "path": "pages/index/index",
       "style": {
@@ -64,15 +39,22 @@
       }
     },
     {
-      "path": "pages/login/index",
+      "path": "pages/my/index",
       "style": {
-        "navigationBarTitleText": "登录"
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
       }
     },
     {
-      "path": "pages/recommend/index",
+      "path": "pages/cart/default",
       "style": {
-        "navigationBarTitleText": "特惠推荐"
+        "navigationBarTitleText": "购物车"
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "登录"
       }
     },
     {
@@ -82,9 +64,15 @@
       }
     },
     {
-      "path": "pages/my/settings",
+      "path": "pages/my/address/index",
       "style": {
-        "navigationBarTitleText": "设置"
+        "navigationBarTitleText": "地址管理"
+      }
+    },
+    {
+      "path": "pages/my/address/form",
+      "style": {
+        "navigationBarTitleText": "新建地址"
       }
     },
     {
@@ -96,22 +84,57 @@
       }
     },
     {
+      "path": "pages/my/settings",
+      "style": {
+        "navigationBarTitleText": "账户管理"
+      }
+    },
+    {
       "path": "pages/my/interest",
       "style": {
         "navigationBarTitleText": "兴趣分类"
       }
     },
-    // {
-    //   "path": "pages/my/address/index",
-    //   "style": {
-    //     "navigationBarTitleText": "地址管理"
-    //   }
-    // },
     {
-      "path": "pages/my/address/form",
+      "path": "pages/order/index",
       "style": {
-        "navigationBarTitleText": "新建地址"
+        "navigationBarTitleText": "订单管理"
       }
+    },
+    {
+      "path": "pages/recommend/index",
+      "style": {
+        "navigationBarTitleText": "特惠推荐"
+      }
+    }
+  ],
+  // 分包
+  "subPackages": [
+    {
+      // 商品分包
+      "root": "pages/goods",
+      // 子包页面路径和窗口表现
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "商品详情",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "list",
+          "style": {
+            "navigationBarTitleText": "商品列表"
+          }
+        },
+        {
+          "path": "filter/index",
+          "style": {
+            "navigationBarTitleText": "筛选"
+          }
+        }
+      ]
     }
   ],
   "globalStyle": {

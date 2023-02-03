@@ -50,7 +50,6 @@
     <button class="button" @tap="submitFrom">{{ props.id ? '保存' : '确定' }}</button>
     <!-- <button class="button" style="margin-top: 10px" @tap="reset">{{ '重置' }}</button> -->
   </view>
-  <!-- position: absolute; right: 5rpx;  -->
 </template>
 
 <script lang="ts" setup>

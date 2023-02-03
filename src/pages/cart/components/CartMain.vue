@@ -6,9 +6,9 @@
         <text class="label">满减</text>
         <text class="desc">满1件，即可享受9折优惠</text>
       </view>
-      <view v-if="false" class="blank">购物车还是空的，快来挑选好货吧！</view>
+      <view v-if="carts.length === 0" class="blank">购物车还是空的，快来挑选好货吧！</view>
       <!-- 购物车商品 -->
-      <view class="carts">
+      <view v-else class="carts">
         <uni-swipe-action>
           <uni-swipe-action-item v-for="item in carts" :key="item.skuId" class="swipe-cell">
             <navigator hover-class="none" :url="'/pages/goods/index?id=' + item.id" class="card">

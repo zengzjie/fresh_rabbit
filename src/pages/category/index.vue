@@ -27,7 +27,7 @@
         <view v-for="item in categorySubList" :key="item.id" class="panel">
           <view class="title">
             {{ item.name }}
-            <navigator class="more" hover-class="none" url="/pages/goods/list/index">全部</navigator>
+            <navigator class="more" hover-class="none" url="/pages/goods/list">全部</navigator>
           </view>
           <view class="section">
             <navigator
