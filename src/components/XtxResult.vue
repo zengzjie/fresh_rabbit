@@ -2,21 +2,25 @@
   <view class="x-result" :class="[selecting ? 'x-fixed' : '']">
     <view class="x-result-header">
       <view class="x-result-header__tabs">
-        <view class="x-result-header__tabs__item" :class="{ active: tabIndex === 0 }" @tap="handleComprehensive">
-          <text class="label">{{ comprehensiveLabel }}</text>
+        <view class="x-result-header__tabs__item" @tap="handleComprehensive">
+          <text class="label">
+            {{ comprehensiveLabel }}
+          </text>
           <text :class="[selecting ? 'icon-up' : 'icon-down']"></text>
         </view>
-        <view class="x-result-header__tabs__item" :class="{ active: tabIndex === 1 }" @tap="byPrice">
+        <view class="x-result-header__tabs__item" @tap="byPrice">
           <text class="label">价格</text>
-          <text :class="iconSort"></text>
+          <text :class="priceIconSort"></text>
         </view>
-        <view class="x-result-header__tabs__item" :class="{ active: tabIndex === 2 }" @tap="bySale">
+        <view class="x-result-header__tabs__item" @tap="bySale">
           <text class="label">销售</text>
+          <text :class="saleIconSort"></text>
         </view>
-        <view class="x-result-header__tabs__item" @tab="handleFilter">
+        <view class="x-result-header__tabs__item" @tap="handleFilter">
           <text class="label">筛选</text>
           <text class="icon-filter"></text>
         </view>
+        <view class="x-result-header__tabs__activeUnderline"></view>
       </view>
     </view>
 
@@ -78,7 +82,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, computed } from 'vue';
 const goods = [
   {
     id: 1,
@@ -152,7 +156,13 @@ const selecting = ref(false);
 // 综合选择的 label
 const comprehensiveLabel = ref('综合');
 // 价格排序的 icon
-const iconSort = ref('icon-sort');
+const priceIconSort = ref('icon-sort');
+// 销售排序的 icon
+const saleIconSort = ref('icon-sort');
+
+const left = computed(() => {
+  return `${tabIndex.value * 180 + 50}rpx`;
+});
 
 // 综合选择
 const handleComprehensive = () => {
@@ -160,14 +170,26 @@ const handleComprehensive = () => {
 };
 
 // 价格排序
-const byPrice = () => {};
+const byPrice = () => {
+  tabIndex.value = 1;
+  selecting.value = false;
+  // 字体图标
+  priceIconSort.value = priceIconSort.value === 'icon-up' ? 'icon-down' : 'icon-up';
+  console.log(left.value, 'left1');
+};
 
 // 销售
-const bySale = () => {};
+const bySale = () => {
+  tabIndex.value = 2;
+  selecting.value = false;
+  saleIconSort.value = saleIconSort.value === 'icon-up' ? 'icon-down' : 'icon-up';
+  console.log(left.value, 'left2');
+};
 
 // 下拉选择
 const handleChange = (e: MouseEvent) => {
   const { index = '0', option = '' } = (e.target as HTMLElement).dataset;
+  tabIndex.value = 0;
   optionIndex.value = parseInt(index);
   comprehensiveLabel.value = option;
   selecting.value = false;
@@ -183,7 +205,7 @@ const handleOffMask = () => {
 // 筛选
 const handleFilter = () => {
   uni.navigateTo({
-    url: '/pages/filter/index'
+    url: '/pages/goods/filter/index'
   });
 };
 </script>
@@ -214,6 +236,7 @@ const handleFilter = () => {
     &__tabs {
       display: flex;
       justify-content: space-between;
+      position: relative;
       &__item {
         display: flex;
         justify-content: center;
@@ -222,21 +245,18 @@ const handleFilter = () => {
         .label {
           font-size: 28rpx;
           color: $gray-10-1;
-          position: relative;
         }
       }
-      .active {
-        .label::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          bottom: -10rpx;
-          width: 40rpx;
-          height: 4rpx;
-          border-radius: 4rpx;
-          background-color: $green-4-1;
-          transform: translateX(25%);
-        }
+      &__activeUnderline {
+        content: '';
+        position: absolute;
+        left: v-bind(left);
+        bottom: -8rpx;
+        width: 40rpx;
+        height: 4rpx;
+        border-radius: 4rpx;
+        background-color: $green-4-1;
+        transition: all 0.3s;
       }
     }
   }
