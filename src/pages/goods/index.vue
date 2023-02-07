@@ -1,5 +1,5 @@
 <template>
-  <view v-if="false">骨架</view>
+  <GoodsSkeleton v-if="isShowSkeleton" />
   <template v-else>
     <scroll-view scroll-y enhanced :bounces="false" :show-scrollbar="false" scroll-with-animation class="goods">
       <view :style="{ height: globalProperties.$safeAreaInsets?.top + 'px' }"></view>
@@ -164,6 +164,7 @@ import VkDataGoodsSkuPopup from '@/components/vk-data-goods-sku-popup/vk-data-go
 import HelpsPanel from '@/pages/goods/components/HelpsPanel.vue';
 import ShipmentPanel from '@/pages/goods/components/ShipmentPanel.vue';
 import ClausePanel from '@/pages/goods/components/ClausePanel.vue';
+import GoodsSkeleton from '@/pages/goods/components/GoodsSkeleton.vue';
 import { onLoad, onReady } from '@dcloudio/uni-app';
 import { reactive, ref, computed } from 'vue';
 import useCurrentInstance from '@/hooks/useCurrentInstance';
@@ -178,6 +179,8 @@ const props = defineProps<{
 const { instance, globalProperties } = useCurrentInstance();
 const addressStore = useAddressStore();
 const { selectedAddress } = storeToRefs(addressStore);
+
+const isShowSkeleton = ref(true);
 
 const totalCartNum = ref('99+');
 const canvasTextWidth = ref(0);
@@ -256,6 +259,7 @@ onLoad(async () => {
         };
       })
     };
+    isShowSkeleton.value = false;
   }
 });
 
