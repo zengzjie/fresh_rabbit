@@ -189,7 +189,7 @@ page {
           .more {
             padding-left: 20rpx;
             font-size: 24rpx;
-            color: #999;
+            color: $uni-text-color-grey;
             &::after {
               font-family: 'erabbit' !important;
               content: '\e6c2';

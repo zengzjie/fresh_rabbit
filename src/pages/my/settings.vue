@@ -15,10 +15,10 @@
         src="https://raw.githubusercontent.com/zengzjie/picgo-image/main/static_files/IMG_6247.JPG"
       ></image>
     </navigator>
-    <!-- 已登陆的用户才能修改收获地址 -->
+    <!-- 已登陆的用户才能修改收货地址 -->
     <template v-if="isLogin">
       <view class="list">
-        <navigator url="./address" hover-class="none" class="item arrow">
+        <navigator url="./address/index" hover-class="none" class="item arrow">
           <text class="label">收货地址</text>
         </navigator>
         <navigator hover-class="none" class="item arrow">我的尺码</navigator>

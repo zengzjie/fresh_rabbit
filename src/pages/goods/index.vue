@@ -122,10 +122,13 @@
       </view>
     </view>
 
+    <!-- popup弹窗 -->
     <uni-popup ref="popup" type="bottom" background-color="#fff" safe-area is-mask-click>
       <view class="popup-root">
         <text class="close icon-close" @tap="hideHalfDialog"></text>
-        内容区
+        <ShipmentPanel v-if="layer === 'shipment'" />
+        <ClausePanel v-if="layer === 'clause'" />
+        <HelpsPanel v-if="layer === 'helps'" />
       </view>
     </uni-popup>
 
@@ -158,6 +161,9 @@ import { SkuMode, Layer } from './types';
 import { getGoodsById, getGoodsRelevant } from '@/services/goods';
 import { GoodsRelevantItem, GoodsResult } from '@/types/goods';
 import VkDataGoodsSkuPopup from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup.vue';
+import HelpsPanel from '@/pages/goods/components/HelpsPanel.vue';
+import ShipmentPanel from '@/pages/goods/components/ShipmentPanel.vue';
+import ClausePanel from '@/pages/goods/components/ClausePanel.vue';
 import { onLoad, onReady } from '@dcloudio/uni-app';
 import { reactive, ref, computed } from 'vue';
 import useCurrentInstance from '@/hooks/useCurrentInstance';

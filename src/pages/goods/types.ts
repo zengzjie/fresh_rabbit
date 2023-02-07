@@ -1,4 +1,4 @@
-export type Layer = 'helps' | 'sku' | 'shipment' | 'clause';
+export type Layer = 'helps' | 'shipment' | 'clause';
 
 export const enum SkuMode {
   // 都显示

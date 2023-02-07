@@ -27,7 +27,7 @@
     </scroll-view>
     <view v-if="!loading && addressList.length === 0" class="empty">
       <uni-icons type="location" size="60" color="rgb(192, 196, 204)"></uni-icons>
-      <text class="blank">收获地址为空</text>
+      <text class="blank">收货地址为空</text>
     </view>
     <view v-if="!loading" class="footer" :class="{ 'safe-area-inset-bottom': true }">
       <button class="button" @tap="handleAddress">新建地址</button>
@@ -66,11 +66,11 @@ onShow(async () => {
   addressList.value = res;
 });
 
-// 选择收获地址
+// 选择收货地址
 const changeAddress = (item: MemberAddressItem) => {
   // 只有从订单页面跳转过来选择地址后需要回退
   if (props.from === 'order') {
-    // 更新 Stores 里的收获地址
+    // 更新 Stores 里的收货地址
     changeSelectedAddress(item);
     uni.navigateBack();
   }

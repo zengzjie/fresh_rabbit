@@ -79,7 +79,7 @@ image {
 .popup-root .close {
   position: absolute;
   right: 24rpx;
-  top: 24rpx;
+  top: 40rpx;
 }
 
 .popup-root .footer {

@@ -33,7 +33,7 @@ const logout = () => {
       if (res.confirm) {
         // 清理用户信息
         memberStore.clearProfileInfo();
-        // 清理收获地址
+        // 清理收货地址
         // addressStore.clearSelectedAddress();
         // 后退两级
         uni.navigateBack({ delta: 2 });
