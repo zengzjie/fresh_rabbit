@@ -4,7 +4,7 @@
     <scroll-view scroll-y enhanced :bounces="false" :show-scrollbar="false" scroll-with-animation class="goods">
       <view :style="{ height: globalProperties.$safeAreaInsets?.top + 'px' }"></view>
       <!-- 商品信息 -->
-      <view class="goods-info anchor" data-anchor-index="0">
+      <view class="goods-info">
         <view class="goods-info-preview">
           <swiper circular @change="handleSwiperChange">
             <swiper-item v-for="(url, index) in goods.mainPictures" :key="index">
@@ -29,7 +29,7 @@
           <view class="goods-info-meta--remarks">{{ goods.desc }}</view>
         </view>
         <view class="goods-info-related">
-          <view class="goods-info-related--item arrow" @tap="openSkuPopup(SkuMode.Both)">
+          <view class="goods-info-related--item arrow" @tap="openSkuPopup(SkuMode.Cart)">
             <text class="goods-info-related--item__label">选择</text>
             <text class="goods-info-related--item__text ellipsis">
               {{ selectArrText || '请选择商品规格' }}
@@ -46,7 +46,7 @@
         </view>
       </view>
       <!-- 商品详情 -->
-      <view class="goods-detail panel anchor" data-anchor-index="2">
+      <view class="goods-detail panel">
         <view class="panel-title">
           <text class="panel-title__text">商品详情</text>
         </view>
@@ -73,7 +73,7 @@
         <navigator hover-class="none">常见问题</navigator>
       </view>
       <!-- 推荐 -->
-      <view class="goods-recommend panel anchor" data-anchor-index="3">
+      <view class="goods-recommend panel">
         <view class="panel-title">
           <text class="panel-title__text">商品推荐</text>
         </view>
@@ -156,7 +156,7 @@
 </template>
 
 <script lang="ts" setup>
-import { GoodsSku } from '@/components/vk-data-goods-sku-popup/types';
+import { GoodsSku, SkuEvent } from '@/components/vk-data-goods-sku-popup/types';
 import { SkuMode, Layer } from './types';
 import { getGoodsById, getGoodsRelevant } from '@/services/goods';
 import { GoodsRelevantItem, GoodsResult } from '@/types/goods';
@@ -167,18 +167,23 @@ import ClausePanel from '@/pages/goods/components/ClausePanel.vue';
 import { onLoad, onReady } from '@dcloudio/uni-app';
 import { reactive, ref, computed } from 'vue';
 import useCurrentInstance from '@/hooks/useCurrentInstance';
-import { getMemberCart } from '@/services/cart';
+import { getMemberCart, postMemberCart } from '@/services/cart';
+import { useAddressStore } from '@/stores';
+import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
   id: string;
 }>();
 
 const { instance, globalProperties } = useCurrentInstance();
+const addressStore = useAddressStore();
+const { selectedAddress } = storeToRefs(addressStore);
 
 const totalCartNum = ref('99+');
 const canvasTextWidth = ref(0);
-// 这里是为了获取当前用户的购物车数量，用于显示在购物车图标上
-onReady(async () => {
+
+// 获取徽章宽度
+const getBadgeWidth = async () => {
   // 获取购物车数量长度
   const carts = await getMemberCart();
   if (carts.length > 99) {
@@ -188,6 +193,10 @@ onReady(async () => {
   }
   const context = uni.createCanvasContext('myCanvas', instance);
   canvasTextWidth.value = context.measureText(totalCartNum.value).width;
+};
+// 这里是为了获取当前用户的购物车数量，用于显示在购物车图标上
+onReady(() => {
+  getBadgeWidth();
 });
 
 const cartRight = computed(() => {
@@ -204,7 +213,7 @@ const cartRight = computed(() => {
 
 // 存储 sku 组件实例
 const skuRef = ref();
-// 用于 SKU 展示的规格文本
+// 用于 SKU 展示的规格文本 ❗️ 这里是后端的商品详情接口没用返回规格文本，所以一开始规格文本是为空的，需要在选择规格后，将规格文本拼接起来
 const selectArrText = computed(() => skuRef.value?.selectArr.join(' ').trim());
 
 // 是否显示 SKU 组件
@@ -276,7 +285,10 @@ const layer = ref<Layer>('helps');
 
 // 点击规格
 const openSkuPopup = (mode: number) => {
-  console.log(mode, 'modemode');
+  // 显示什么模式
+  skuMode.value = mode;
+  // 显示 SKU 组件
+  isShowSku.value = true;
 };
 
 // 显示弹层
@@ -298,10 +310,28 @@ const goToCart = () => {
 };
 
 // 点击添加购物车
-const handleAddCart = () => {};
+const handleAddCart = async (ev: SkuEvent) => {
+  // 调用接口加入购物车
+  await postMemberCart({ skuId: ev._id, count: ev.buy_num });
+  // 🛒 更新购物车角标
+  getBadgeWidth();
+  // 成功提示
+  uni.showToast({ title: '添加成功' });
+  // 关闭 SKU 组件
+  isShowSku.value = false;
+};
 
 // 点击立即购买
-const handleBuyNow = () => {};
+const handleBuyNow = (ev: SkuEvent) => {
+  const skuId = ev._id;
+  const count = ev.buy_num;
+  const addressId = selectedAddress.value.id;
+  uni.navigateTo({
+    url: `/pages/order/create?skuId=${skuId}&count=${count}&addressId=${addressId}`
+  });
+  // 关闭 SKU 组件
+  isShowSku.value = false;
+};
 </script>
 
 <style lang="scss">

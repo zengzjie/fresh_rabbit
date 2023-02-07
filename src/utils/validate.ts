@@ -32,6 +32,7 @@ name: [
  * @param {Rules} rules 校验规则
  * @return {Boolean} 校验结果
  */
+/*
 export function validate(form: AnyObject, rules: Rules) {
   // 遍历规则
   for (const key in rules) {
@@ -58,3 +59,4 @@ export function validate(form: AnyObject, rules: Rules) {
   // 校验通过
   return true;
 }
+*/

@@ -2,7 +2,7 @@
   <view class="viewport">
     <view class="card">
       <!-- left-icon="person" -->
-      <XtxForm ref="formRef" :model="form" :rules="rules" label-position="top">
+      <XtxForm ref="formRef" :model="form" :rules="rules" label-position="left">
         <XtxFormItem key="receiver" label="姓名" prop="receiver" :required="true">
           <XtxInput v-model="form.receiver" placeholder="请填写收货人姓名" />
         </XtxFormItem>
