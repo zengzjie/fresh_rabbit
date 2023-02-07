@@ -102,11 +102,11 @@ image {
 
 .popup-root .footer .primary {
   color: $uni-text-color-inverse;
-  background-color: #27ba9b;
+  background-color: $green-4-1;
 }
 
 .popup-root .footer .secondary {
-  background-color: #ffa868;
+  background-color: $orange-4-1;
 }
 
 .x-flex {

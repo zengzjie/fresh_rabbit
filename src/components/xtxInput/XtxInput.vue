@@ -226,7 +226,6 @@ const uSelectionEnd = computed(() => Number(props.selectionEnd));
 
 // 修改输入框变红的状态
 const onFormItemError = (status: boolean) => {
-  console.log('onFormItemError', status);
   validateState.value = status;
 };
 

@@ -20,7 +20,7 @@
         />
       </view>
     </view>
-    <scroll-view scroll-y :show-scrollbar="false" enhanced class="content">
+    <scroll-view scroll-y :show-scrollbar="false" enhanced>
       <template v-for="(item, index) in filters" :key="index">
         <Panel :title="item.title" :source="item.source" :collapsed="item.collapsed" />
       </template>
@@ -100,9 +100,6 @@ page {
       background-color: $gray-2-3;
     }
   }
-}
-.content {
-  flex: 1;
 }
 
 .footer {

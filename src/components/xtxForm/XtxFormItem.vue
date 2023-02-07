@@ -8,14 +8,14 @@
   >
     <view class="x-form-item__body" :style="{ flexDirection: elLabelPosition === 'left' ? 'row' : 'column' }">
       <view
-        class="x-form-item--left"
+        class="x-form-item--left x-flex"
         :style="{
           width: xLabelWidth,
           flex: `0 0 ${xLabelWidth}`,
           mraginBottom: elLabelPosition === 'left' ? 0 : '10rpx'
         }"
       >
-        <view v-if="required || leftIcon || label" class="x-form-item--left__content">
+        <view v-if="required || leftIcon || label" class="x-form-item--left__content x-flex">
           <view v-if="required" class="x-form-item--left__content--required">*</view>
           <view v-if="leftIcon" class="x-form-item--left__content__icon">
             <uni-icons
@@ -26,7 +26,7 @@
           </view>
           <!-- label的 justify-content 位置 -->
           <view
-            class="x-form-item--left__content__label"
+            class="x-form-item--left__content__label x-flex"
             :style="[
               elLabelStyle,
               {
@@ -46,8 +46,8 @@
         </view>
       </view>
       <view class="x-form-item--right x-flex">
-        <view class="x-form-item--right__content">
-          <view class="x-form-item--right__content__slot">
+        <view class="x-form-item--right__content x-flex">
+          <view class="x-form-item--right__content__slot x-flex">
             <slot></slot>
           </view>
           <view v-if="slots.right || rightIcon" class="x-form-item--right__content__icon x-flex">
@@ -254,7 +254,7 @@ const validated = (trigger: 'blur' | 'change', callback = (str?: string) => {}) 
   const fieldValue = xForm.model[props.prop as string];
   // 🔧 blur和change是否有当前的校验规则
   const rules = getFilteredRule(trigger);
-  // ❗️ 注意：判断是否有验证规则，如果没有规则，也调用回调方法，否则父组件 x-for m会因为对 count 变量的统计错误而无法进入上一层的回调
+  // ❗️ 注意：判断是否有验证规则，如果没有规则，也调用回调方法，否则父组件 x-form 会因为对 count 变量的统计错误而无法进入上一层的回调
   if (!rules || rules.length === 0) {
     callback('');
     return;
@@ -376,14 +376,8 @@ onBeforeUnmount(() => {
   }
 
   &--left {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
     &__content {
       position: relative;
-      display: flex;
-      align-items: center;
-      flex-direction: row;
       flex: 1;
       padding-right: 10rpx;
       &--required {
@@ -399,9 +393,6 @@ onBeforeUnmount(() => {
       }
 
       &__label {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
         flex: 1;
       }
     }
@@ -410,15 +401,9 @@ onBeforeUnmount(() => {
   &--right {
     flex: 1;
     &__content {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
       flex: 1;
       &__slot {
         flex: 1;
-        display: flex;
-        align-items: center;
-        flex-direction: row;
         position: relative;
       }
       &__icon {

@@ -1,11 +1,13 @@
 // 获取全局属性
-import { ComponentInternalInstance, getCurrentInstance } from 'vue';
+import { AppContext, ComponentInternalInstance, ComponentPublicInstance, getCurrentInstance } from 'vue';
 export default function useCurrentInstance() {
-  const { appContext, proxy } = getCurrentInstance() as ComponentInternalInstance;
+  const instance = getCurrentInstance() as ComponentInternalInstance;
+  const appContext: AppContext = instance.appContext;
+  const proxy: (ComponentPublicInstance & Record<string, any>) | null = instance.proxy;
   const globalProperties = appContext.config.globalProperties;
-  const _proxy = proxy as any;
   return {
-    _proxy,
+    instance,
+    proxy,
     globalProperties
   };
 }

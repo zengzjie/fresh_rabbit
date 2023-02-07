@@ -44,7 +44,7 @@ import XtxCarousel from '@/components/XtxCarousel.vue';
 import XtxGuess, { GuessExpose } from '@/components/XtxGuess.vue';
 import { getHomeBanner, getHomeCategoryHeadMutli, getHomeMutli, getHomeNewList } from '@/services/home';
 import type { BannerItem, CategoryItem, HotItem, NewItem } from '@/types/home';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShow } from '@dcloudio/uni-app';
 
 const isShowSkeleton = ref<boolean>(false);
 // 猜你喜欢Ref

@@ -90,7 +90,7 @@ const onGetphonenumberSimple = async () => {
   }
 };
 
-const loginSuccess = (profile: LoginWxMinResult) => {
+const loginSuccess = async (profile: LoginWxMinResult) => {
   // 保存用户信息到 Store 中
   memberStore.setProfileInfo(profile);
   // 登录成功提示

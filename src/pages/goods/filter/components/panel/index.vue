@@ -7,7 +7,7 @@
         <text :class="[defaultCollapsed ? 'icon-up' : 'icon-down']"></text>
       </view>
     </view>
-    <view v-show="defaultCollapsed" class="panel-section">
+    <view v-show="defaultCollapsed" class="panel-section x-flex">
       <Capsule v-for="item in source" :key="(item as string)" :text="(item as string)" />
     </view>
   </view>
@@ -78,10 +78,7 @@ watch(
   }
   &-section {
     width: 95vw;
-    display: flex;
-    align-items: center;
     justify-content: flex-start;
-    flex-direction: row;
     padding-bottom: 10rpx;
     overflow-x: auto;
   }

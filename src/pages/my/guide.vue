@@ -13,7 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, getCurrentInstance, onUpdated, computed } from 'vue';
+import useCurrentInstance from '@/hooks/useCurrentInstance';
+import { ref, onUpdated, computed } from 'vue';
 
 interface IProps {
   /** 是否显示 */
@@ -51,7 +52,8 @@ function close() {
   emit('update:show', false);
 }
 
-const { proxy }: any = getCurrentInstance();
+// 全局变量中获取安全区域
+const { proxy } = useCurrentInstance();
 // 给个初始值，否则template中渲染对象报错
 const currentTip = ref<TipItem>({
   width: 0,
@@ -67,7 +69,7 @@ function moveView() {
   step.value += 1;
   currentTip.value = props.list[step.value];
   const nextTip = currentTip.value;
-  proxy.$scope.animate(
+  proxy?.$scope.animate(
     '#visual-view',
     [
       {

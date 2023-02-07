@@ -432,7 +432,7 @@ import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
 // 全局变量中获取安全区域
-const { _proxy, globalProperties } = useCurrentInstance();
+const { proxy, globalProperties } = useCurrentInstance();
 
 const memberStore = useMemberStore();
 const { isLogin, profile } = storeToRefs(memberStore);
@@ -451,19 +451,19 @@ const orderTypes = [
  * 当滚动源滚动到 startScrollOffset 时，动画开始执行，当滚动源滚动到 endScrollOffset 时，动画结束执行
  */
 onReady(() => {
-  _proxy.$scope.animate('.profile', [{ opacity: 1 }, { opacity: 0 }], 500, {
+  proxy?.$scope.animate('.profile', [{ opacity: 1 }, { opacity: 0 }], 500, {
     scrollSource: '#scrollView',
     timeRange: 500,
     startScrollOffset: 0,
     endScrollOffset: 150
   });
-  _proxy.$scope.animate('.navbar', [{ top: '0' }, { top: '-30px' }], 500, {
+  proxy?.$scope.animate('.navbar', [{ top: '0' }, { top: '-30px' }], 500, {
     scrollSource: '#scrollView',
     timeRange: 500,
     startScrollOffset: 0,
     endScrollOffset: 150
   });
-  _proxy.$scope.animate('.navbar .title', [{ opacity: 0 }, { opacity: 1 }], 500, {
+  proxy?.$scope.animate('.navbar .title', [{ opacity: 0 }, { opacity: 1 }], 500, {
     scrollSource: '#scrollView',
     timeRange: 500,
     startScrollOffset: 85,

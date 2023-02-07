@@ -103,7 +103,7 @@ page {
       line-height: 90rpx;
       padding-left: 10rpx;
       font-size: 30rpx;
-      color: #333;
+      color: $uni-text-color;
       border-top: 1rpx solid #ddd;
       position: relative;
       &:first-child {
