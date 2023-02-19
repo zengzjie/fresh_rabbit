@@ -4,7 +4,7 @@
       class="header-box"
       :style="[
         {
-          height: props.bgHeight + 'rpx' || customBarHeight + 'px',
+          height: props.bgHeight ? props.bgHeight + 'rpx' : customBarHeight + 'px',
           paddingTop: statusBarHeight + 'px',
           color: titleColor,
           background: bgAttribute
@@ -14,7 +14,9 @@
       <view @tap="goBack">
         <slot name="back">返回</slot>
       </view>
-      <view>{{ title }}</view>
+      <view class="header-box__title">
+        {{ title }}
+      </view>
       <view style="width: 32px"></view>
     </view>
   </view>
@@ -48,8 +50,8 @@ const props = defineProps({
   },
   // 背景高度
   bgHeight: {
-    type: Number,
-    default: 0,
+    type: [Number, Boolean],
+    default: false,
     required: false
   }
 });
@@ -58,12 +60,11 @@ const props = defineProps({
 const customBarHeight = ref(0);
 // 状态栏高度
 const statusBarHeight = ref(0);
-
-const style = computed(() => `height: ${props.bgHeight + 'rpx' || customBarHeight.value + 'px'}`);
+const style = computed(() => `height: ${props.bgHeight ? props.bgHeight + 'rpx' : customBarHeight.value + 'px'}`);
 
 onLoad(() => {
   statusBarHeight.value = globalProperties.$StatusBar + 10;
-  customBarHeight.value = globalProperties.$CustomBar;
+  customBarHeight.value = globalProperties.$CustomBar + 10;
 });
 
 const goBack = () => {
@@ -78,6 +79,9 @@ const goBack = () => {
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
+    &__title {
+      font-size: 28rpx;
+    }
   }
 }
 </style>

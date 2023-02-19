@@ -16,6 +16,13 @@
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
+      "path": "pages/my/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
       "path": "pages/index/index",
       "style": {
         "navigationStyle": "custom",
@@ -38,13 +45,13 @@
         "backgroundColorBottom": "#f7f7f8"
       }
     },
-    {
-      "path": "pages/my/index",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTextStyle": "white"
-      }
-    },
+    // {
+    //   "path": "pages/my/index",
+    //   "style": {
+    //     "navigationStyle": "custom",
+    //     "navigationBarTextStyle": "white"
+    //   }
+    // },
     {
       "path": "pages/cart/default",
       "style": {
@@ -96,12 +103,6 @@
       }
     },
     {
-      "path": "pages/order/index",
-      "style": {
-        "navigationBarTitleText": "订单管理"
-      }
-    },
-    {
       "path": "pages/recommend/index",
       "style": {
         "navigationBarTitleText": "特惠推荐"
@@ -132,6 +133,46 @@
           "path": "filter/index",
           "style": {
             "navigationBarTitleText": "筛选"
+          }
+        }
+      ]
+    },
+    {
+      // 订单分包
+      "root": "pages/order",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "我的订单"
+          }
+        },
+        {
+          "path": "payment",
+          "style": {
+            "navigationBarTitleText": "订单支付",
+            "navigationStyle": "custom",
+            "navigationBarTextStyle": "black"
+          }
+        },
+        {
+          "path": "logistics",
+          "style": {
+            "navigationBarTitleText": "查看物流"
+          }
+        },
+        {
+          "path": "detail",
+          "style": {
+            "navigationBarTitleText": "订单详情",
+            "navigationStyle": "custom",
+            "navigationBarTextStyle": "black"
+          }
+        },
+        {
+          "path": "create",
+          "style": {
+            "navigationBarTitleText": "填写订单"
           }
         }
       ]
