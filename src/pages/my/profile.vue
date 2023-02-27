@@ -159,16 +159,21 @@ const submitForm = async () => {
     cityCode,
     countyCode
   });
-  // 提示用户
-  uni.showToast({ icon: 'success', title: '保存成功' });
+  // 提示用户 - 后退返回上一页（正常的流程：个人中心点击修改资料跳转到当前页，修改完成后退回去）
+  uni.showToast({
+    icon: 'success',
+    title: '保存成功',
+    success: () =>
+      setTimeout(() => {
+        uni.navigateBack();
+      }, 1000)
+  });
   // 🐛 同步更新 Store 的昵称和职业
   setProfileInfo({
     ...profile,
     nickname,
     profession
   });
-  // 后退返回上一页（正常的流程：个人中心点击修改资料跳转到当前页，修改完成后退回去）
-  uni.navigateBack();
 };
 </script>
 
