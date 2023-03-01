@@ -5,31 +5,31 @@ export interface SkuItem {
   /**
    * 商品保存库存控制的最小可用单位 sku_id
    */
-  _id: string
+  _id: string;
   /**
    * 商品id
    */
-  goods_id: string
+  goods_id: string;
   /**
    * 商品名称
    */
-  goods_name: string
+  goods_name: string;
   /**
    * 商品图片
    */
-  image: string
+  image: string;
   /**
    * 商品价格，注意：这里需要乘以 100
    */
-  price: number
+  price: number;
   /**
    * 商品规格名称集合
    */
-  sku_name_arr: string[]
+  sku_name_arr: string[];
   /**
    * 商品库存
    */
-  stock: number
+  stock: number;
 }
 
 /**
@@ -39,7 +39,7 @@ export interface SkuEvent extends SkuItem {
   /**
    * 商品购买数量
    */
-  buy_num: number
+  buy_num: number;
 }
 
 /**
@@ -49,11 +49,11 @@ export interface SpecItem {
   /**
    * 规格可选值集合
    */
-  list: { name: string }[]
+  list: { name: string }[];
   /**
    * 规格名称
    */
-  name: string
+  name: string;
 }
 
 /**
@@ -63,21 +63,21 @@ export interface GoodsSku {
   /**
    * 保存库存控制的最小可用单位 sku_id
    */
-  _id: string
+  _id: string;
   /**
    * 商品名称
    */
-  name: string
+  name: string;
   /**
    * 商品图片
    */
-  goods_thumb: string
+  goods_thumb: string;
   /**
    * 字段名 - 商品对应的sku列表的字段名
    */
-  sku_list: SkuItem[]
+  sku_list: SkuItem[];
   /**
    * 字段名 - 商品规格名称的字段名
    */
-  spec_list: SpecItem[]
+  spec_list: SpecItem[];
 }
