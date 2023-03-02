@@ -118,7 +118,7 @@ const isAllSelected = computed(() => {
 // 计算以选中的商品数量
 const selectedCarts = computed(() => carts.value.filter((item) => item.selected));
 
-// 计算以选中的商品数量
+// 计算以选中的商品数量总数
 const selectedCartsCount = computed(() => selectedCarts.value.reduce((sum, item) => sum + Number(item.count), 0));
 
 // 计算选中商品的总价
